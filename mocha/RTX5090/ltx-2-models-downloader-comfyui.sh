@@ -38,8 +38,7 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 # =========================================================
 
 echo "==> Installing Python dependencies from ltx-2-models-downloader"
-pip install -r https://raw.githubusercontent.com/rjamitsharma01/ltx-2-models-downloader/main/requirements.txt
-
+pip install -r https://raw.githubusercontent.com/rjamitsharma01/ai_models_setup/main/mocha/RTX5090/requirements.txt
 # =========================================================
 # 🔥 CUSTOM NODES (GIT CLONE / UPDATE)
 # =========================================================
