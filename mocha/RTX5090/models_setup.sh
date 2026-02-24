@@ -80,7 +80,7 @@ mkdir -p \
 echo "==> Download LTX-2 checkpoint"
 cd $MODELS_BASE/diffusion_models
 # curl -L -O https://huggingface.co/Orange-3DV-Team/MoCha/resolve/main/preview/step18500.ckpt
-curl -L -O hhttps://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/MoCha/Wan2_1_mocha-14B-preview_fp8_e4m3fn_scaled_KJ.safetensors
+curl -L -O https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/MoCha/Wan2_1_mocha-14B-preview_fp8_e4m3fn_scaled_KJ.safetensors
 
 echo "==> Download LTX-2 spatial upscaler"
 cd $MODELS_BASE/vae
