@@ -80,7 +80,7 @@ curl -L -O https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_b
 
 echo "==> Download text_encoders"
 cd $MODELS_BASE/text_encoders
-curl -L -O https://huggingface.co/Kijai/WanVideo_comfy/blob/main/umt5-xxl-enc-fp8_e4m3fn.safetensors
+curl -L -O https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-fp8_e4m3fn.safetensors
 
 
 
