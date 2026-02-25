@@ -1,36 +1,35 @@
-bitsandbytes>=0.46.1
-importlib_metadata
-huggingface_hub
-scipy
-opencv-python>=4.7.0.72
-filelock
+# =========================================
+# TORCH (CUDA 12.4 - RTX 4090)
+# =========================================
+
+--extra-index-url https://download.pytorch.org/whl/cu124
+
+
+torch
+torchvision
+torchaudio
+
+# =========================================
+# OTHER PACKAGES (FROM NORMAL PYPI)
+# =========================================
+
+imageio-ffmpeg
+opencv-python
+tqdm
 numpy
-Pillow
-einops
-pyyaml
-scikit-image
-python-dateutil
-mediapipe
-fvcore
-yapf
-omegaconf
+surrealist
+boto3==1.34.86
+redis
+fal-client
+scipy
+replicate
 ftfy
-addict
-yacs
-trimesh
-albumentations
-scikit-learn
-matplotlib
-segment-anything
-piexif
-opencv-python-headless>=4.7.0.72
-dill
-git+https://github.com/facebookresearch/sam2
-diffusers>=0.29.1
-accelerate>=0.17.0
-insightface
-ultralytics
-onnxruntime-gpu==1.18.0
-onnxruntime==1.18.0
-imageio_ffmpeg
-pykalman
+accelerate>=1.2.1
+einops
+diffusers>=0.33.0
+peft>=0.17.0
+sentencepiece>=0.2.0
+protobuf
+pyloudnorm
+gguf>=0.17.1
+nnx
