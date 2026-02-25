@@ -1,11 +1,29 @@
-torch==2.6.0
-numpy
+# =====================================================
+# 🔥 TORCH (RTX 4090 - CUDA 12.4)
+# =====================================================
+
+--index-url https://download.pytorch.org/whl/cu124
+
+torch
+torchvision
+torchaudio
+
+# =====================================================
+# 🔥 CORE LIBRARIES
+# =====================================================
+
+imageio-ffmpeg
 opencv-python
-scipy
 tqdm
+numpy
+surrealist
 boto3==1.34.86
 redis
-imageio-ffmpeg
+fal-client
+scipy
+replicate
+ftfy
+accelerate>=1.2.1
 einops
 diffusers>=0.33.0
 peft>=0.17.0
@@ -13,3 +31,4 @@ sentencepiece>=0.2.0
 protobuf
 pyloudnorm
 gguf>=0.17.1
+nnx
