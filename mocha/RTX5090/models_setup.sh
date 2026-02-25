@@ -62,6 +62,7 @@ clone_or_update () {
   fi
 }
 
+clone_or_update https://github.com/kijai/ComfyUI-WanVideoWrapper.git
 clone_or_update https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
 clone_or_update https://github.com/kijai/ComfyUI-segment-anything-2.git
 clone_or_update https://github.com/un-seen/comfyui-tensorops.git
