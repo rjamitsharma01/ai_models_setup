@@ -23,15 +23,6 @@ echo "==> Activating virtual environment"
 source .venv/bin/activate
 echo "==> Python path: $(which python)"
 
-# =========================================================
-# 🔥 FIX TORCH FOR RTX 5090 (VERY IMPORTANT)
-# =========================================================
-
-echo "==> Installing PyTorch with CUDA 13 support"
-pip uninstall -y torch torchvision torchaudio
-
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu130
-
 
 # =========================================================
 # 🔥 INSTALL PYTHON REQUIREMENTS (LOCKED & CONTROLLED)
@@ -78,16 +69,16 @@ mkdir -p \
   $MODELS_BASE/text_encoders \
   $MODELS_BASE/loras \
 
-echo "==> Download LTX-2 checkpoint"
+echo "==> Download diffusion_models"
 cd $MODELS_BASE/diffusion_models
 # curl -L -O https://huggingface.co/Orange-3DV-Team/MoCha/resolve/main/preview/step18500.ckpt
 curl -L -O https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/MoCha/Wan2_1_mocha-14B-preview_fp8_e4m3fn_scaled_KJ.safetensors
 
-echo "==> Download LTX-2 spatial upscaler"
+echo "==> Download vae"
 cd $MODELS_BASE/vae
 curl -L -O https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_bf16.safetensors
 
-echo "==> Download LTX-2 spatial upscaler"
+echo "==> Download text_encoders"
 cd $MODELS_BASE/text_encoders
 curl -L -O https://huggingface.co/Kijai/WanVideo_comfy/blob/main/umt5-xxl-enc-fp8_e4m3fn.safetensors
 
