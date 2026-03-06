@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clipboard Bridge</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Clipboard Bridge</h1>
+      <p class="lead">Pair devices with QR, then share text/files. LAN-first via WebRTC, internet fallback via server relay.</p>
+
+      <section class="card grid-two">
+        <div>
+          <h2>Create session (Device A)</h2>
+          <button id="createBtn">Create Pairing Session</button>
+          <p><strong>Session Code:</strong> <span id="sessionCode">-</span></p>
+          <div id="qrBox" class="qr-box"></div>
+        </div>
+
+        <div>
+          <h2>Join session (Device B)</h2>
+          <label>Session code</label>
+          <input id="joinCode" type="text" placeholder="e.g. A1B2C3D4" />
+          <button id="joinBtn">Join</button>
+          <button id="scanBtn">Scan QR</button>
+          <div id="reader" class="reader hidden"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Status</h2>
+        <ul>
+          <li>Socket: <span id="socketState">disconnected</span></li>
+          <li>Peer: <span id="peerState">not connected</span></li>
+          <li>Route: <span id="routeState">unknown</span></li>
+          <li>Network hint: <span id="netHint">not checked</span></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Send text</h2>
+        <textarea id="textInput" rows="4" placeholder="Type text, prompt, notes..."></textarea>
+        <button id="sendTextBtn">Send Text</button>
+      </section>
+
+      <section class="card">
+        <h2>Send file</h2>
+        <input id="fileInput" type="file" />
+        <button id="sendFileBtn">Send File</button>
+      </section>
+
+      <section class="card">
+        <h2>Received</h2>
+        <div id="received"></div>
+      </section>
+    </main>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

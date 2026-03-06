@@ -1,0 +1,96 @@
+:root {
+  color-scheme: light dark;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #0f1220;
+  color: #f2f3f6;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.lead {
+  opacity: 0.9;
+}
+
+.card {
+  background: #1a1f33;
+  border: 1px solid #2e3551;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+textarea,
+input,
+button {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid #3f4a72;
+  padding: 10px;
+  margin: 6px 0;
+  background: #11162a;
+  color: #f2f3f6;
+}
+
+button {
+  cursor: pointer;
+  background: #384dff;
+  border: none;
+  font-weight: 600;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+.qr-box {
+  margin-top: 8px;
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  background: #0b0f20;
+  border: 1px dashed #55608f;
+  border-radius: 8px;
+}
+
+.reader {
+  margin-top: 10px;
+  border: 1px solid #3f4a72;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+#received .item {
+  border: 1px solid #3f4a72;
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 8px;
+}
+
+#received a {
+  color: #85b1ff;
+}
+
+@media (max-width: 760px) {
+  .grid-two {
+    grid-template-columns: 1fr;
+  }
+}
