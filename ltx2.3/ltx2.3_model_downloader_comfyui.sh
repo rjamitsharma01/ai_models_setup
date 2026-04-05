@@ -8,17 +8,27 @@ CUSTOM_NODES=$COMFY_BASE/custom_nodes
 echo "==> Going to ComfyUI directory"
 cd "$COMFY_BASE"
 
-# ---------- WAIT FOR .venv ----------
-echo "==> Waiting for .venv directory..."
-while [ ! -d ".venv" ]; do
+echo "==> Waiting for ComfyUI files..."
+
+while [ ! -f "main.py" ]; do
+  echo "⏳ ComfyUI not ready yet..."
   sleep 2
 done
 
-sleep 5
+echo "==> Checking Python (torch)..."
+
+until python3 -c "import torch" &>/dev/null; do
+  echo "⏳ Python not ready..."
+  sleep 2
+done
+
+echo "✅ Environment ready"
+sleep 3
+
 
 # ---------- ACTIVATE ----------
-source .venv/bin/activate
-echo "==> VENV: $(which python)"
+# source .venv/bin/activate
+# echo "==> VENV: $(which python)"
 
 # =========================================================
 # 🔥 REQUIREMENTS
