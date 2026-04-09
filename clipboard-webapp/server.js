@@ -1,0 +1,119 @@
+const path = require('path');
+const http = require('http');
+const express = require('express');
+const { Server } = require('socket.io');
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*'
+  },
+  maxHttpBufferSize: 1e8
+});
+
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 100 * 1024 * 1024 } });
+const sessions = new Map();
+
+app.use(express.json({ limit: '100mb' }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/api/session', (req, res) => {
+  const id = uuidv4().slice(0, 8).toUpperCase();
+  sessions.set(id, {
+    id,
+    createdAt: Date.now(),
+    sockets: []
+  });
+  res.json({ id });
+});
+
+app.post('/api/upload/:sessionId', upload.single('file'), (req, res) => {
+  const sessionId = req.params.sessionId?.toUpperCase();
+  const session = sessions.get(sessionId);
+  if (!session || !req.file) {
+    return res.status(400).json({ error: 'Invalid session or file.' });
+  }
+
+  io.to(sessionId).emit('relay:file', {
+    name: req.file.originalname,
+    type: req.file.mimetype || 'application/octet-stream',
+    size: req.file.size,
+    payload: req.file.buffer.toString('base64')
+  });
+
+  return res.json({ ok: true });
+});
+
+io.on('connection', (socket) => {
+  socket.on('session:join', (sessionIdRaw, ack) => {
+    const sessionId = String(sessionIdRaw || '').toUpperCase().trim();
+    if (!sessionId) {
+      ack?.({ ok: false, error: 'Missing session code.' });
+      return;
+    }
+
+    const session = sessions.get(sessionId);
+    if (!session) {
+      ack?.({ ok: false, error: 'Session not found.' });
+      return;
+    }
+
+    if (session.sockets.length >= 2 && !session.sockets.includes(socket.id)) {
+      ack?.({ ok: false, error: 'Session already has two devices.' });
+      return;
+    }
+
+    if (!session.sockets.includes(socket.id)) {
+      session.sockets.push(socket.id);
+    }
+
+    socket.join(sessionId);
+    socket.data.sessionId = sessionId;
+
+    const peers = session.sockets.filter((id) => id !== socket.id);
+    ack?.({ ok: true, peers });
+    socket.to(sessionId).emit('peer:joined', socket.id);
+  });
+
+  socket.on('signal', ({ to, data }) => {
+    io.to(to).emit('signal', { from: socket.id, data });
+  });
+
+  socket.on('relay:text', ({ sessionId, text }) => {
+    if (!sessionId || typeof text !== 'string') {
+      return;
+    }
+    socket.to(sessionId).emit('relay:text', { text, from: socket.id });
+  });
+
+  socket.on('relay:file', ({ sessionId, file }) => {
+    if (!sessionId || !file) {
+      return;
+    }
+    socket.to(sessionId).emit('relay:file', file);
+  });
+
+  socket.on('disconnect', () => {
+    const { sessionId } = socket.data;
+    if (!sessionId || !sessions.has(sessionId)) {
+      return;
+    }
+
+    const session = sessions.get(sessionId);
+    session.sockets = session.sockets.filter((id) => id !== socket.id);
+
+    socket.to(sessionId).emit('peer:left');
+
+    if (session.sockets.length === 0) {
+      sessions.delete(sessionId);
+    }
+  });
+});
+
+const port = Number(process.env.PORT || 3000);
+server.listen(port, '0.0.0.0', () => {
+  console.log(`Clipboard bridge running at http://0.0.0.0:${port}`);
+});
